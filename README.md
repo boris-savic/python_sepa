@@ -7,7 +7,7 @@ Library API is heavily inspired by wonderful but closed source FinTech package f
 
 ## 1. Installation
 
-    $ pip install sepa_generator
+    $ pip install sepa-generator
 
 
 ## 2. Quick Start
@@ -16,6 +16,10 @@ Library API is heavily inspired by wonderful but closed source FinTech package f
 ### 2.1 Create simple transaction
 
 ```python
+from decimal import Decimal
+from sepa_generator.core import Account, SEPACreditTransfer, Amount
+
+
 debtor = Account(iban='SI12345678910',
                  bic='BAKOSI2X',
                  name='Our company Ltd.',)
