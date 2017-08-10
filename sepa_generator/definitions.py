@@ -1,10 +1,13 @@
 
-def construct_tag_data(tag_name, attrs=None, value=None):
+def construct_tag_data(tag_name, attrs=None, value=None, sorting=None):
     data = {
         '_name': tag_name,
         '_attrs': attrs or [],
         '_value': value,
     }
+
+    if sorting:
+        data['_sorting'] = sorting
 
     return data
 
@@ -68,7 +71,7 @@ def construct_transaction_data(ctransfer, transaction):
     transaction_information['_sorting'] = ['PmtId', 'Amt', 'ChrgBr', 'UltmtDbtr', 'CdtrAgt', 'Cdtr', 'CdtrAcct',
                                            'UltmtCdtr', 'Purp', 'RmtInf']
 
-    transaction_information['payment_id'] = add_simple_child(data=add_simple_child(data=construct_tag_data('PmtId'),
+    transaction_information['payment_id'] = add_simple_child(data=add_simple_child(data=construct_tag_data('PmtId', sorting=['InstrId', 'EndToEndId']),
                                                                                    child_friendly_name='instruction',
                                                                                    child_tag_name='InstrId',
                                                                                    child_value=transaction.uuid),
@@ -122,7 +125,7 @@ def construct_transaction_data(ctransfer, transaction):
                                                       child_tag_name='Cd',
                                                       child_value='SCOR')
 
-        rmt_creditor_ref_inf = add_simple_child(data=construct_tag_data('CdtrRefinf'),
+        rmt_creditor_ref_inf = add_simple_child(data=construct_tag_data('CdtrRefInf'),
                                                 child_friendly_name='reference',
                                                 child_tag_name='Ref',
                                                 child_value=transaction.cref)
@@ -148,8 +151,8 @@ def construct_payment_information(ctransfer):
     payment_inf['control_sum'] = construct_tag_data('CtrlSum', value=ctransfer.get_control_sum())
 
     payment_instruction = construct_tag_data('PmtTpInf')
-    payment_instruction['_sorting'] = ['IntrPrty', 'SvcLvl']
-    payment_instruction['priority'] = construct_tag_data('IntrPrty', value='NORM')
+    payment_instruction['_sorting'] = ['InstrPrty', 'SvcLvl']
+    payment_instruction['priority'] = construct_tag_data('InstrPrty', value='NORM')
     payment_instruction['service_level'] = add_simple_child(construct_tag_data('SvcLvl'), 'code', 'Cd', [], 'SEPA')
 
     payment_inf['instruction'] = payment_instruction
