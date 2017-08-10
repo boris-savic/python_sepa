@@ -5,8 +5,8 @@ from decimal import Decimal
 from datetime import datetime
 from lxml import etree
 
-from sepa.builder import build_xml
-from sepa.definitions import construct_document
+from sepa_generator.builder import build_xml
+from sepa_generator.definitions import construct_document
 
 
 class Amount:

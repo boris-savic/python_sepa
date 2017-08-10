@@ -1,6 +1,6 @@
 from decimal import Decimal
 
-from sepa.core import Account, SEPACreditTransfer, Amount
+from sepa_generator.core import Account, SEPACreditTransfer, Amount
 
 debtor = Account(iban='SI123456789',
                  bic='BAKOSI2X',
