@@ -27,7 +27,8 @@ def construct_header(ctransfer):
     header['creation_date_time'] = construct_tag_data('CreDtTm', value=ctransfer.timestamp)
     header['num_transactions'] = construct_tag_data('NbOfTxs', value=ctransfer.get_num_of_transactions())
     header['control_sum'] = construct_tag_data('CtrlSum', value=ctransfer.get_control_sum())
-    header['initiating_party'] = add_simple_child(construct_tag_data('InitgPty'), 'name', 'Nm', [], ctransfer.debtor.name)
+    header['initiating_party'] = add_simple_child(construct_tag_data('InitgPty'), 'name', 'Nm', [],
+                                                  ctransfer.debtor.name)
 
     return header
 
@@ -41,7 +42,8 @@ def construct_iban(account, tag_name):
 
 def construct_bic(account, tag_name):
     bic_data = construct_tag_data(tag_name)
-    bic_data['financial_instrument_id'] = add_simple_child(construct_tag_data('FinInstnId'), 'bic', 'BIC', [], account.bic)
+    bic_data['financial_instrument_id'] = add_simple_child(construct_tag_data('FinInstnId'), 'bic', 'BIC', [],
+                                                           account.bic)
 
     return bic_data
 
@@ -71,13 +73,15 @@ def construct_transaction_data(ctransfer, transaction):
     transaction_information['_sorting'] = ['PmtId', 'Amt', 'ChrgBr', 'UltmtDbtr', 'CdtrAgt', 'Cdtr', 'CdtrAcct',
                                            'UltmtCdtr', 'Purp', 'RmtInf']
 
-    transaction_information['payment_id'] = add_simple_child(data=add_simple_child(data=construct_tag_data('PmtId', sorting=['InstrId', 'EndToEndId']),
-                                                                                   child_friendly_name='instruction',
-                                                                                   child_tag_name='InstrId',
-                                                                                   child_value=transaction.uuid),
-                                                             child_friendly_name='eref',
-                                                             child_tag_name='EndToEndId',
-                                                             child_value=transaction.eref)
+    transaction_information['payment_id'] = add_simple_child(
+        data=add_simple_child(data=construct_tag_data('PmtId', sorting=['InstrId', 'EndToEndId']),
+                              child_friendly_name='instruction',
+                              child_tag_name='InstrId',
+                              child_value=transaction.uuid),
+        child_friendly_name='eref',
+        child_tag_name='EndToEndId',
+        child_value=transaction.eref)
+
     transaction_information['amount'] = add_simple_child(data=construct_tag_data('Amt'),
                                                          child_friendly_name='amount',
                                                          child_tag_name='InstdAmt',

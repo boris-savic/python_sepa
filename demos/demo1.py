@@ -17,7 +17,8 @@ creditor = Account(iban='SI54678645',
 
 sepa_transfer = SEPACreditTransfer(debtor=debtor)
 
-sepa_transfer.add_transaction(creditor, Amount(Decimal('100.10')), 'Purpose of the transfer', 'SI99', 'OTHR', cref='SI99123546787')
+sepa_transfer.add_transaction(creditor, Amount(Decimal('100.10')), 'Purpose of the transfer', 'SI99', 'OTHR',
+                              cref='SI99123546787')
 
 
 print(sepa_transfer.render_xml())
