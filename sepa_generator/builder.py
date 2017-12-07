@@ -1,4 +1,5 @@
 from lxml import etree
+from six import iteritems
 
 
 def build_xml(data):
@@ -7,7 +8,7 @@ def build_xml(data):
     for attr, val in data['_attrs']:
         tag.attrib[attr] = val
 
-    for child, child_data in data.iteritems():
+    for child, child_data in iteritems(data):
         if not child.startswith('_'):
             child_tag = build_xml(child_data)
             tag.append(child_tag)
