@@ -88,12 +88,10 @@ class SEPACreditTransfer:
 
     def render_xml(self):
         return ("%s%s" % ('<?xml version="1.0" encoding="UTF-8"?>\n',
-                          str(etree.tostring(build_xml(construct_document(self)),
+                          etree.tostring(build_xml(construct_document(self)),
                                              pretty_print=True,
                                              xml_declaration=False,
-                                             encoding="UTF-8").decode('UTF-8'))
-                          )
-                ).encode('UTF-8')
+                                             encoding="utf-8").decode('utf-8'))).encode('utf-8')
 
     def get_num_of_transactions(self):
         return str(len(self.transactions))
