@@ -28,8 +28,8 @@ class Amount:
 
 class Account:
     def __init__(self, iban, bic, name, street=None, city=None, postcode=None, country=None, use_ultimate=True):
-        self.iban = iban
-        self.bic = bic
+        self.iban = iban.replace(" ", "")  # Remove all spaces
+        self.bic = bic.replace(" ", "")  # Remove all spaces
         self.name = name
         self.street = street
         self.city = city
