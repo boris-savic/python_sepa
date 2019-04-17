@@ -122,7 +122,6 @@ def construct_transaction_data(ctransfer, transaction):
                                         child_friendly_name='additional_info',
                                         child_tag_name='AddtlRmtInf',
                                         child_value=transaction.purpose)
-
         rmt_tp = construct_tag_data('Tp')
         rmt_tp['code_or_property'] = add_simple_child(data=construct_tag_data('CdOrPrtry'),
                                                       child_friendly_name='code',
@@ -134,8 +133,10 @@ def construct_transaction_data(ctransfer, transaction):
                                                 child_tag_name='Ref',
                                                 child_value=transaction.cref)
         rmt_creditor_ref_inf['tp'] = rmt_tp
+        rmt_creditor_ref_inf['_sorting'] = ['Tp', 'Ref']
 
         rmt_inf_strd['creditor_ref_information'] = rmt_creditor_ref_inf
+        rmt_inf_strd['_sorting'] = ['CdtrRefInf', 'AddtlRmtInf']
         rmt_inf['structured'] = rmt_inf_strd
 
         transaction_information['remote_inf'] = rmt_inf
