@@ -96,7 +96,8 @@ def construct_transaction_data(ctransfer, transaction):
                                                                       child_tag_name='Nm',
                                                                       child_value=ctransfer.debtor.name)
 
-    transaction_information['creditor_agent'] = construct_bic(transaction.creditor, 'CdtrAgt')
+    if transaction.creditor.bic:
+        transaction_information['creditor_agent'] = construct_bic(transaction.creditor, 'CdtrAgt')
     transaction_information['creditor_data'] = construct_address_data(transaction.creditor, 'Cdtr')
     transaction_information['creditor_account'] = construct_iban(transaction.creditor, 'CdtrAcct')
 
@@ -164,7 +165,8 @@ def construct_payment_information(ctransfer):
     payment_inf['requested_execution_time'] = construct_tag_data('ReqdExctnDt', value=ctransfer.execution_time)
     payment_inf['debtor'] = construct_address_data(ctransfer.debtor, 'Dbtr')
     payment_inf['debtor_account'] = construct_iban(ctransfer.debtor, 'DbtrAcct')
-    payment_inf['debtor_agent'] = construct_bic(ctransfer.debtor, 'DbtrAgt')
+    if ctransfer.debtor.bic:
+        payment_inf['debtor_agent'] = construct_bic(ctransfer.debtor, 'DbtrAgt')
 
     payment_inf['charge_bearer'] = construct_tag_data('ChrgBr', value='SLEV')
 
