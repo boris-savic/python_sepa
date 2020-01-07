@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name='sepa_generator',
     packages=['sepa_generator'],
-    version='0.2.4',
+    version='0.2.5',
     description='Simple Python library for creating SEPA Credit Transfer XML documents',
     author='Boris Savic',
     author_email='boris70@gmail.com',
